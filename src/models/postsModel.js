@@ -4,11 +4,17 @@ import conectarAoBanco from "../config/dbConfig.js";
 const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 
 // Função assíncrona que retorna todos os posts do banco de dados
-export default async function getTodosPosts() {
+export async function getTodosPosts() {
     // Acessa o banco de dados 'rafa-instalike'
     const db = conexao.db('rafa-instalike');
     // Acessa a coleção 'posts' dentro do banco de dados
     const colecao = db.collection('posts');
     // Converte os documentos da coleção em um array e retorna
     return colecao.find().toArray();
+}
+
+export async function criarPost(novoPost) {
+    const db = conexao.db('rafa-instalike');
+    const colecao = db.collection('posts');
+    return colecao.insertOne(novoPost)
 }
